@@ -1,0 +1,96 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .produto {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .produto img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .produto-info {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Carrinho de Compras</h1>
+        {% for produto in produtos %}
+            <div class="produto">
+                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}">
+                <div class="produto-info">
+                    <h3>{{ produto.nome }}</h3>
+                    <p>{{ produto.descricao }}</p>
+                    <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        
+        <h3>Total: R$ {{ total }}</h3>
+
+        <!-- Caixa de Texto para inserir o valor pago -->
+        <div class="input-group">
+            <label for="valor_pago">Valor Pago:</label>
+            <input type="number" id="valor_pago" name="valor_pago">
+        </div>
+
+        <div class="input-group">
+            <label for="troco">Troco:</label>
+            <input type="number" id="troco" name="troco" readonly>
+        </div>
+
+        <button onclick="calcularTroco()">Calcular Troco</button>
+    </div>
+
+    <script>
+        function calcularTroco() {
+            var valorPago = parseFloat(document.getElementById('valor_pago').value);
+            var total = {{ total }};
+            var troco = valorPago - total;
+            document.getElementById('troco').value = troco.toFixed(2);
+        }
+    </script>
+</body>
+</html>

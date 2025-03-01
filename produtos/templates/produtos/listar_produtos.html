@@ -1,0 +1,92 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .produto {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .produto img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .produto-info {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .produto button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .produto button:hover {
+            background-color: #45a049;
+        }
+        .add-to-cart-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Produtos Disponíveis</h1>
+        <!-- Formulário para selecionar os produtos e enviar ao carrinho -->
+        <form method="POST" action="{% url 'adicionar_ao_carrinho' %}">
+            <button type="submit" class="add-to-cart-btn">Adicionar ao Carrinho</button>
+            {% csrf_token %}
+            <div>
+                {% for produto in produtos %}
+                    <div class="produto">
+                        <img src="{{ produto.imagem }}" alt="{{ produto.nome }}">
+                        <div class="produto-info">
+                            <h3>{{ produto.nome }}</h3>
+                            <p>{{ produto.descricao }}</p>
+                            <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                        </div>
+                        <!-- Adicionar checkbox para cada produto -->
+                        <label>
+                            <input type="checkbox" name="produtos_selecionados" value="{{ produto.id }}"> Selecionar
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
