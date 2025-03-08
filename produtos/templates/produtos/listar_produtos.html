@@ -75,7 +75,7 @@
                         <img src="{{ produto.imagem }}" alt="{{ produto.nome }}">
                         <div class="produto-info">
                             <h3>{{ produto.nome }}</h3>
-                            <p>{{ produto.descricao }}</p>
+                            <p>{{ produto.descricao|linebreaksbr }}</p>
                             <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
                         </div>
                         <!-- Adicionar checkbox para cada produto -->
